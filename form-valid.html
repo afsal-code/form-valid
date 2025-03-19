@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styled Form</title>
+    <style>
+        /* Same styling as before, no changes */
+        body {
+            height: 100vh;
+            width: 100%;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f0f0;
+        }       
+
+        .main-box {
+            height: 800px;
+            width: 1200px;
+            background-color: white;
+            display: flex;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .image {
+            flex: 1;
+        }
+
+        .image img {
+            height: 100%;
+            width: 100%;
+            object-fit: cover;
+        }
+
+        .form1 {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            background-color: #fff;
+        }
+
+        .form1 h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        .form1 input, 
+        .form1 select {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            outline: none;
+            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+
+        .form1 input:focus,
+        .form1 select:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            font-size: 18px;
+            font-weight: bold;
+            color: white;
+            background-color: #007bff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .submit-btn:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <script>
+        function formvalidator() {
+            var firstname = document.getElementById("name");
+            var addr = document.getElementById("addr");
+            var zip = document.getElementById("zip");
+            var state = document.getElementById("state");
+            var username = document.getElementById("username");
+            var email = document.getElementById("email");
+
+            if (alphabet(firstname, "Please enter only letters in your name")) {
+                if (alphanumberic(addr, "Numbers and letters only")) {
+                    if (isnumeric(zip, "Please enter a valid zip code")) {
+                        if (selection(state, "Please select a state")) {
+                            if (username1(username, "Please enter a valid username (6-8 characters)")) {
+                                alert("Form submitted successfully!");
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
+            return false; // Prevent form submission if validation fails
+
+            function alphabet(x, helpermsg) {
+                var h = /^[A-Za-z]+$/;
+                if (x.value.match(h)) {
+                    return true;
+                } else {
+                    alert(helpermsg);
+                    x.focus();
+                    return false;
+                }
+            }
+
+            function alphanumberic(x, helpermsg) {
+                var h = /^[a-zA-Z0-9\s]+$/;
+                if (x.value.match(h)) {
+                    return true;
+                } else {
+                    alert(helpermsg);
+                    x.focus();
+                    return false;
+                }
+            }
+
+            function isnumeric(x, helpermsg) {
+                var h = /^[0-9]+$/;
+                if (x.value.match(h)) {
+                    if (x.value.length <= 6) {
+                        return true;
+                    } else {
+                        alert("Enter a valid pincode (1-6 digits)");
+                        x.focus();
+                        return false;
+                    }
+                } else {
+                    alert(helpermsg);
+                    x.focus();
+                    return false;
+                }
+            }
+
+            function selection(x, helpermsg) {
+                if (x.value !== "") {
+                    return true;
+                } else {
+                    alert(helpermsg);
+                    x.focus();
+                    return false;
+                }
+            }
+
+            function username1(x, helpermsg) {
+                var h = /^[a-zA-Z0-9._#@]{6,8}$/;
+                if (x.value.match(h)) {
+                    return true;
+                } else {
+                    alert(helpermsg);
+                    x.focus();
+                    return false;
+                }
+            }
+        }
+    </script>
+    
+    <div class="main-box">
+        <div class="image">
+            <img src="https://img.freepik.com/free-vector/cyber-data-security-online-concept-illustration-internet-security-information-privacy-protection_1150-37328.jpg?t=st=1739515964~exp=1739519564~hmac=b75dd92837ee8b73453a1cc8af4aa25d0b2b59f5065ef9d57bb821ad43bacfda&w=826" alt="Security Image">
+        </div>
+
+        <div class="form1">
+            <h2>Registration Form</h2>
+            <form onsubmit="return formvalidator();">
+                <input type="text" id="name" placeholder="Enter Name">
+                <input type="text" id="addr" placeholder="Enter Address">
+                <input type="number" id="zip" placeholder="Enter Zip Code">
+                
+                <select id="state">
+                    <option value="">Select State</option>
+                    <option value="kerala">Kerala</option>
+                    <option value="tamilnadu">Tamil Nadu</option>
+                    <option value="karnataka">Karnataka</option>
+                </select>
+
+                <input type="text" id="username" placeholder="Username">
+                <input type="email" id="email" placeholder="Enter Email">
+                
+                <button type="submit" class="submit-btn">Submit</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
